@@ -1,0 +1,17 @@
+{
+  "name": "express-error-handling",
+  "version": "1.0.0",
+  "description": "Demo for generic error handling with express and promises.",
+  "main": "server-generators.js",
+  "dependencies": {
+    "bluebird": "^3.0.5",
+    "express": "^4.13.3",
+    "request-promise": "^1.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Toby",
+  "license": "MIT"
+}
