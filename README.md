@@ -13,6 +13,9 @@ Both of these servers use the same global error handling middleware: `error-hand
 
 `github-api.js` implements a couple of github API for use as "api calls" to use with this demo.
 
+## Credit
+
+This code took inspiration from [this article from StrongLoop](https://strongloop.com/strongblog/async-error-handling-expressjs-es7-promises-generators/).
 
 
 
