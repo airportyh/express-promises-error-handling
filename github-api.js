@@ -22,3 +22,12 @@ exports.getUser = function getUser(id) {
     return JSON.parse(str);
   });
 };
+
+exports.getRepos = function getRepos(userId) {
+  return request(
+    'https://api.github.com/users/' + userId + '/repos',
+    { headers: { 'User-Agent': 'express' } })
+  .then(function(str) {
+    return JSON.parse(str);
+  });
+};

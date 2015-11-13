@@ -27,6 +27,9 @@ app.get('/', api(function(req, resp) {
         throw new error.Unauthorized('Unauthorized user ' + gist.owner.login);
       }
       return github.getUser(gist.owner.login);
+    })
+    .then(function(user) {
+      return github.getRepos(user.login);
     });
 }));
 

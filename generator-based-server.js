@@ -25,8 +25,9 @@ app.get('/', api(function *(req, resp) {
   }
   // You can do it again!
   let user = yield github.getUser(gist.owner.login);
+  let repos = yield github.getRepos(user.login);
   // just return the object you want to render as JSON response
-  return user;
+  return repos;
 }));
 
 // Implementation of the api wrapper function for
