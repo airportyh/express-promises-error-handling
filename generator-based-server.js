@@ -23,7 +23,7 @@ app.get('/', api(function *(req, resp) {
   if (gist.owner.login === 'airportyh') {
     throw new error.Unauthorized('Unauthorized user ' + gist.owner.login);
   }
-  // You can do it again!
+  // You yield as many times as you want!
   let user = yield github.getUser(gist.owner.login);
   let repos = yield github.getRepos(user.login);
   // just return the object you want to render as JSON response
