@@ -2,9 +2,8 @@
 // Error handler implemented as an express middleware.
 module.exports = function(err, req, resp, next) {
   if (err) {
-    // Setting status to 500, although we could
-    // attach the status number to the error object if we wanted
-    resp.status(500);
+    // Use the status code of the error, defaulting to 500
+    resp.status(err.statusCode || 500);
     // logs the error along with the method and path to the console
     console.warn('Server error occurred for', req.method, req.path);
     // and the stacktrace

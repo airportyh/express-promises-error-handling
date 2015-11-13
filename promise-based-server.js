@@ -3,6 +3,8 @@
 var express = require('express');
 var errorHandler = require('./error-handler');
 var github = require('./github-api');
+var util = require('util');
+var error = require('./http-errors');
 var app = express();
 
 // Note the api wrapper used, it allows our service handler
@@ -12,9 +14,18 @@ app.get('/', api(function(req, resp) {
   // this handler simply hits the Github API for a gist
   // then hits the API again for info on the owner of the gist
   // it returns a promise, whose value - when it resolves - will
-  // be rendered as a JSON response
-  return github.getGist('d45749d6ecd657520e9d')
+  // be rendered as a JSON response. It demonstrates throwing
+  // custom errors as well.
+  var gistId = req.query.gistId; // get gistID from query param
+  if (!gistId) {
+    throw new error.BadRequest("Gist ID required");
+  }
+  return github.getGist(gistId)
     .then(function(gist) {
+      if (gist.owner.login === 'airportyh') {
+        // We just don't like Toby
+        throw new error.Unauthorized('Unauthorized user ' + gist.owner.login);
+      }
       return github.getUser(gist.owner.login);
     });
 }));

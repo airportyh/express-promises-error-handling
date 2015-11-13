@@ -4,6 +4,7 @@ const express = require('express');
 const bluebird = require('bluebird');
 const github = require('./github-api');
 const errorHandler = require('./error-handler');
+const error = require('./http-errors');
 const app = express();
 
 // Like the promise-based version, this uses an `api`
@@ -12,8 +13,16 @@ const app = express();
 // finally write straight-line Node code despite having to
 // do asychronous IO.
 app.get('/', api(function *(req, resp) {
+  let gistId = req.query.gistId;
+  if (!gistId) {
+    throw new error.BadRequest('Gist ID required');
+  }
   // Have a promise? Just yield it to get its underlying value
-  let gist = yield github.getGist('d45749d6ecd657520e9d');
+  let gist = yield github.getGist(gistId);
+
+  if (gist.owner.login === 'airportyh') {
+    throw new error.Unauthorized('Unauthorized user ' + gist.owner.login);
+  }
   // You can do it again!
   let user = yield github.getUser(gist.owner.login);
   // just return the object you want to render as JSON response
